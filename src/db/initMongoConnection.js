@@ -1,6 +1,3 @@
-// mongodb+srv://landartina_db_user:pn3yGzrBv6iazQVO@cluster0.7ietten.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-// npm install mongodb
-
 import mongoose from 'mongoose';
 
 import { getEnvVar } from '../utils/getEnvVar.js';
