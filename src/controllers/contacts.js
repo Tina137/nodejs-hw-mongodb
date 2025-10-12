@@ -63,7 +63,7 @@ export async function patchContactController(req, res, next) {
   res.json({
     status: 200,
     message: `Successfully patched a contact!`,
-    data: result.contact,
+    data: result,
   });
 }
 
@@ -76,5 +76,5 @@ export async function deleteContactController(req, res) {
     throw new createHttpError.NotFound('Contact not found');
   }
 
-  res.json({ status: 200, message: 'Contact deleted successfully' });
+  res.json();
 }
