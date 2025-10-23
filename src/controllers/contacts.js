@@ -52,7 +52,8 @@ export async function getContactsControllerById(req, res, next) {
 
 export async function postContactController(req, res) {
   try {
-    const newContact = await postContact(req.body);
+    const newContact = await postContact({ ...req.body, useId: req.user._id });
+
     res.status(201).json({
       status: 201,
       message: 'Successfully created a contact!',
