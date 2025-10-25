@@ -10,6 +10,8 @@ import {
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
 
 export async function getContactsController(req, res, next) {
   try {
@@ -52,12 +54,23 @@ export async function getContactsControllerById(req, res, next) {
   }
 }
 
-export async function postContactController(req, res) {
+export async function postContactController(req, res, next) {
   try {
+    const photo = req.file;
+
+    let photoUrl;
+
+    if (photo) {
+      if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+        photoUrl = await saveFileToCloudinary(photo);
+      } else {
+        photoUrl = await saveFileToUploadDir(photo);
+      }
+    }
     const newContact = await postContact({
       ...req.body,
       userId: req.user._id,
-      photo: req.file,
+      photo: photoUrl,
     });
 
     res.status(201).json({
@@ -83,7 +96,7 @@ export async function patchContactController(req, res, next) {
       photoUrl = await saveFileToUploadDir(photo);
     }
   }
-  const result = await updateContact(contactId, {
+  const result = await updateContact(contactId, req.user._id, {
     ...req.body,
     photo: photoUrl,
   });
@@ -101,7 +114,6 @@ export async function patchContactController(req, res, next) {
 
 export async function deleteContactController(req, res) {
   const { contactId } = req.params;
-  const photo = req.file;
 
   const result = await deleteContact(contactId, req.user._id);
 

@@ -1,5 +1,4 @@
 import path from 'node:path';
-import multer from 'multer';
 
 export const SORT_ORDER = {
   ASC: 'asc',
@@ -22,18 +21,6 @@ export const TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
 
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'temp');
 export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, TEMP_UPLOAD_DIR);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now();
-    cb(null, `${uniqueSuffix}_${file.originalname}`);
-  },
-});
-
-export const upload = multer({ storage });
 
 export const CLOUDINARY = {
   CLOUD_NAME: 'CLOUD_NAME',
