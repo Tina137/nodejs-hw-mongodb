@@ -175,6 +175,7 @@
                     "type": "string",
                     "description": "Contact avatar",
                     "default": null,
+                    "format": "binary",
                     "example": "https://res.cloudinary.com/dha4xvgfi/image/upload/v1759947947/aclxd7sbpsrb8hviowbe.jpg"
                   }
                 }
@@ -525,6 +526,7 @@
                     "type": "string",
                     "description": "Contact avatar",
                     "default": null,
+                    "format": "binary",
                     "example": "https://res.cloudinary.com/dha4xvgfi/image/upload/v1759947947/aclxd7sbpsrb8hviowbe.jpg"
                   }
                 }
